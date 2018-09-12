@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FUNC name="isFileExist" param_count="3" return_type="int">
+	<ENV>
+		<OS>linux</OS>
+		<LANG>JP</LANG>
+		<COMPILE>gcc version 4.4.7 20120313 (Red Hat 4.4.7-4) (GCC)</COMPILE>
+		<XML>libxml2</XML>
+		<PROGLANG>Stand C Language</PROGLANG>
+	</ENV>
+	<OBJ>
+		<GLOBAL count="0">
+		</GLOBAL>
+		<PARAM count="3">
+			<char name="fileName" pointer="1" ></char>
+			<int name="resultCode" pointer="1" ></int>
+			<char name="resultCodeDtl" len="256" ></char>
+		</PARAM>
+		<LOCAL count="3">
+			<struct typename="stat" name="fileInfo">0</struct>
+			<int name="returnValue">0</int>
+			<int name="ret">0</int>
+		</LOCAL>
+	</OBJ>
+	<EVN1>
+		<T1>
+			<DEFINE from="FUNC.OBJ.LOCAL"></DEFINE>
+		</T1>
+		<T2>
+			<CHECK from="FUNC.OBJ.PARAM"></CHECK>
+			<SET from="FUNC.OBJ.LOCAL"></SET>
+			<SET from="FUNC.OBJ.GLOBAL"></SET>
+			<SET from="FUNC.EVN1.T1"></SET>
+		</T2>
+		<T3>
+			<CALL name="stat" param_count="2">
+				<PARAM from="FUNC.OBJ.PARAM" name="fileName"></PARAM>
+				<PARAM from="FUNC.OBJ.LOCAL" name="fileInfo"></PARAM>
+				<RETURN from="FUNC.OBJ.LOCAL" name="ret" type="int"></RETURN>
+			</CALL>
+			<SET from="FUNC.OBJ.PARAM" name="errorCode">errno</SET>
+			<IF from="FUNC.OBJ.LOCAL" name="ret">
+				<CONDITION value="0">
+					<SET from="FUNC.OBJ.LOCAL" name="resultCode">1</SET>
+				</CONDITION>
+				<ELSE>
+					<SWITCH from="FUNC.OBJ.PARAM" name="errorCode">
+						<CASE value="ENOENT">
+							<SET from="FUNC.OBJ.LOCAL" name="resultCode">0</SET>
+							<SET from="FUNC.OBJ.PARAM" name="errorCode">0</SET>
+							<BREAK></BREAK>
+						</CASE>
+						<DEFAULT>
+							<SET from="FUNC.OBJ.LOCAL" name="resultCode">0</SET>
+							<BREAK></BREAK>	
+						</DEFAULT>
+					</SWITCH>
+				</ELSE>
+			</IF>
+		</T3>
+		<T4>
+			<RETURN from="FUNC.OBJ.LOCAL" name="resultCode"></RETURN>
+		</T4>
+	</EVN1>
+</FUNC>
