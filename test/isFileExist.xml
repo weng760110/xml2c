@@ -37,7 +37,7 @@
 				<PARAM from="FUNC.OBJ.LOCAL" name="fileInfo"></PARAM>
 				<RETURN from="FUNC.OBJ.LOCAL" name="ret" type="int"></RETURN>
 			</CALL>
-			<SET from="FUNC.OBJ.PARAM" name="errorCode">errno</SET>
+			<SET from="FUNC.OBJ.PARAM" to="SYS.errno" name="errorCode"></SET>
 			<IF from="FUNC.OBJ.LOCAL" name="ret">
 				<CONDITION value="0">
 					<SET from="FUNC.OBJ.LOCAL" name="resultCode">1</SET>
