@@ -12,6 +12,7 @@ FUNC_T  g_Func;
 OBJ_T	g_Obj;
 T1_T	g_T1;
 T2_T	g_T2;
+T3_T	g_T3;
 
 void die(char *msg)
 {
@@ -53,6 +54,9 @@ main(int argc, char **argv)
 
 	getT2 (docname, &g_T2);
 	printxcT2(&g_T2, &g_Obj, &g_T1);
+
+	getT3 (docname, &g_T3, &g_Obj);
+	//printxcT2(&g_T3);
 
     return (1);
 }
