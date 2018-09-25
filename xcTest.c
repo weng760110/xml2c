@@ -37,6 +37,7 @@ main(int argc, char **argv)
 	memset(&g_Obj, 0x00, sizeof(OBJ_T));
 	memset(&g_T1, 0x00, sizeof(T1_T));
 	memset(&g_T2, 0x00, sizeof(T2_T));
+	memset(&g_T3, 0x00, sizeof(T3_T));
 
     getDepthTree (docname, &g_xcTree);
 	printxcTree(&g_xcTree);
@@ -55,8 +56,8 @@ main(int argc, char **argv)
 	getT2 (docname, &g_T2);
 	printxcT2(&g_T2, &g_Obj, &g_T1);
 
-	getT3 (docname, &g_T3, &g_Obj);
-	//printxcT2(&g_T3);
+	getT3 (docname, &g_T3, &g_xcTree, &g_Obj);
+	printT3Set(30);
 
     return (1);
 }
