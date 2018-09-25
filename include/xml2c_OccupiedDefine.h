@@ -213,4 +213,3 @@ typedef struct _XC_TREE {
 
 
 #endif   /* __XML2C_OCCUPIEDDEFINE__ */
-
