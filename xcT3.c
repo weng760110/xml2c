@@ -12,7 +12,7 @@ extern void die(char *msg);
 extern int _getDepthTree (xmlNodePtr cur, P_XC_TREE_T pxcTree, int depth);
 extern xmlNodePtr _getNodePtr(xmlNodePtr cur, int index);
 
-XC_TREE_T g_ThrdTree;
+XC_TREE_T* g_pThrdTree;
 
 P_OBJ_T g_pThrdObj = NULL;
 
@@ -69,7 +69,7 @@ _getT3 (xmlNodePtr cur, P_T3_T pT3)
 
 /* Init value */
 int
-getT3 (char *docname, P_T3_T pT3, P_OBJ_T pxcObj)
+getT3 (char *docname, P_T3_T pT3, XC_TREE_T* pxcTree, P_OBJ_T pxcObj)
 {
 	xmlDocPtr doc;
 	xmlNodePtr root;
@@ -96,13 +96,11 @@ getT3 (char *docname, P_T3_T pT3, P_OBJ_T pxcObj)
 
     cur = root;//root->xmlChildrenNode;
 
-	memset(&g_ThrdTree, 0x00, sizeof(XC_TREE_T));
 	memset(pT3, 0x00, sizeof(T3_T));
+
+	g_pThrdTree = pxcTree;
 	
-	ret = _getDepthTree(cur, &g_ThrdTree, 0);
-	if (ret == 0) {
-		_getT3(cur, pT3);
-	}
+	_getT3(cur, pT3);
 
     xmlFreeDoc(doc);
 
