@@ -11,15 +11,15 @@
 extern void die(char *msg);
 extern int _getDepthTree (xmlNodePtr cur, P_XC_TREE_T pxcTree, int depth);
 
-extern XC_TREE_T g_ThrdTree;
+extern XC_TREE_T* g_pThrdTree;
 extern char g_T3IndexList[65536];
 
 
 void _getTreeStr(int index, char* str)
 {
 	int i=0;
-	for(; g_ThrdTree.dep[index]->name[i][0] != 0; i++) {
-		strcat(str, g_ThrdTree.dep[index]->name[i]);
+	for(; g_pThrdTree->dep[index]->name[i][0] != 0; i++) {
+		strcat(str, g_pThrdTree->dep[index]->name[i]);
 	}
 }
 
@@ -27,13 +27,13 @@ enum OBJ_TYPE_T _getObjType(char* strType)
 {
 	enum OBJ_TYPE_T enumRet = OBJ_TYPE_UNKOWN;
 
-	if (strcmp(strType, "int") != NULL) {
+	if (strcmp(strType, "int") == 0) {
 		return OBJ_TYPE_INT;
 	}
-	else if (strcmp(strType, "char") != NULL) {
+	else if (strcmp(strType, "char") == 0) {
 		return OBJ_TYPE_CHAR;
 	}
-	else if (strcmp(strType, "long") != NULL) {
+	else if (strcmp(strType, "long") == 0) {
 		return OBJ_TYPE_LONG;
 	}
 	
@@ -70,6 +70,7 @@ enum T3_CLASS_T _getT3Class(xmlNodePtr cur)
 	return enumRet;
 }
 
+/* tree */
 int _getT3Index(int index)
 {
 	int i = -1;
@@ -79,25 +80,13 @@ int _getT3Index(int index)
 	else {
 		i = index;
 	}
-	for(; i < g_ThrdTree.count; i++) {
-		if (index == 0) {
-			if (strcmp(g_ThrdTree.dep[i]->name[0], "FUNC") == 0 &&
-				strcmp(g_ThrdTree.dep[i]->name[1], "EVN1") == 0 &&
-				strcmp(g_ThrdTree.dep[i]->name[2], "T3") == 0 &&
-				g_ThrdTree.dep[i]->name[3][0] == 0) {
-				return i;
-			}
-			else continue;
-		}
-		else {
-			if (strcmp(g_ThrdTree.dep[i]->name[0], "FUNC") == 0 &&
-				strcmp(g_ThrdTree.dep[i]->name[1], "EVN1") == 0 &&
-				strcmp(g_ThrdTree.dep[i]->name[2], "T3") == 0) {
-				return i;
+			if (strcmp(g_pThrdTree->dep[i]->name[0], "FUNC") == 0 &&
+				strcmp(g_pThrdTree->dep[i]->name[1], "EVN1") == 0 &&
+				strcmp(g_pThrdTree->dep[i]->name[2], "T3") == 0) {
+				
 			}
 			else break;
 		}
-	}
 	return -1;
 }
 
@@ -135,9 +124,9 @@ xmlNodePtr _getNodePtr(xmlNodePtr cur, int index)
 
 	pNode = cur;
 
-	for(i = 0; g_ThrdTree.dep[index]->name[i][0] != 0 && pNode != NULL; pNode = pNode->children, i++) {
+	for(i = 0; g_pThrdTree->dep[index]->name[i][0] != 0 && pNode != NULL; pNode = pNode->children, i++) {
 		for(; pNode != NULL; pNode = pNode->next) {
-			if (xmlStrcmp(pNode->name, (xmlChar*)g_ThrdTree.dep[index]->name[i]) == 0) {
+			if (xmlStrcmp(pNode->name, (xmlChar*)g_pThrdTree->dep[index]->name[i]) == 0) {
 				bFlag = true;
 				pRet = pNode;
 				break;
