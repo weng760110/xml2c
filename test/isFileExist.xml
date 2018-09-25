@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <FUNC name="isFileExist" param_count="3" return_type="int">
 	<ENV>
