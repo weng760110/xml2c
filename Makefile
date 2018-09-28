@@ -5,11 +5,11 @@ GCC=/usr/bin/gcc
 PROJDIR=$(HOME)/temp/XmlEditor
 
 MODULE = xml2c
-OBJS = xcTree.o xcFunc.o xcObj.o xcT1.o xcT2.o xcT3.o xcT3Common.o xcT3Set.o
+OBJS = xcTree.o xcFunc.o xcObj.o xcT1.o xcT2.o xcT3.o xcT3Common.o xcT3Set.o xcT3Call.o
 CFLAG = -m32 -I/usr/include -I/usr/include/libxml2 -I$(PROJDIR)/include
 D_CFLAG = -g -m32 -I/usr/include -I/usr/include/libxml2 -I$(PROJDIR)/include
 LDIR = -m32 -L. -L/usr/lib -L$(PROJDIR)/lib
-LLIB = -lxml2 -lpub_str_api
+LLIB = -lxml2 -lpub_api
 
 all: SO TEST
 
@@ -39,6 +39,9 @@ xcT3Common.o: xcT3Common.c
 	$(GCC) -c $< $(D_CFLAG)
 
 xcT3Set.o: xcT3Set.c
+	$(GCC) -c $< $(D_CFLAG)
+
+xcT3Call.o: xcT3Call.c
 	$(GCC) -c $< $(D_CFLAG)
 
 clean: 
