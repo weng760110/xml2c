@@ -1,7 +1,8 @@
-#ifdef __XCTREE_H__
-#define __XCTREE_H__
+#ifdef __XML2C_H__
+#define __XML2C_H__
 
 #include "xml2c_OccupiedDefine.h"
+
 
 void getDepthTree (char *docname, P_XC_TREE_T pxcTree);
 void printxcTree(P_XC_TREE_T pxcTree);
@@ -16,4 +17,6 @@ void printxcObjLocal(P_OBJ_T pxcObj);
 int getT1 (char *docname, P_T1_T pT1);
 void printxcT1(P_T1_T pT1);
 
-#endif /* __XCTREE_H__ */
+int printT3Set();
+int printT3Call();
+#endif /* __XML2C_H__ */
